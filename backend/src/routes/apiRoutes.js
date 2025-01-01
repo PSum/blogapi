@@ -72,4 +72,28 @@ router.post('/addPost', async (req, res) => {
   }
 })
 
+router.post('/addComment', async (req, res) => {
+  try {
+    const { postname , author, content } = req.body;
+
+    console.log(author);
+
+    const data = await prisma.comment.create({
+      data: {
+        relatedPost: {
+          connect: { name: postname}
+        },
+        author: {
+          connect: {username: author}
+        },
+        content: content,
+      }
+    })
+  res.status(201).send(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('There has been an error')
+  }
+})
+
 module.exports = router;
