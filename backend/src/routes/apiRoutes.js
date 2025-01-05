@@ -76,8 +76,6 @@ router.post('/addComment', async (req, res) => {
   try {
     const { postname , author, content } = req.body;
 
-    console.log(author);
-
     const data = await prisma.comment.create({
       data: {
         relatedPost: {
